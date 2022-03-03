@@ -1,5 +1,5 @@
 <template>
-  <div class="modal" tabindex="-1" ref="modalDelete">
+  <div class="modal" tabindex="-1" ref="modal">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header bg-danger text-white">
@@ -35,29 +35,31 @@
   </div>
 </template>
 <script>
-import Modal from 'bootstrap/js/dist/modal'
+// import Modal from 'bootstrap/js/dist/modal'
+import modalMixin from '@/mixins/modalMixin'
 
 export default {
   props: ['productData'],
   emits: ['emitDeleteProduct'],
+  mixins: [modalMixin],
   data () {
     return {
       bsModal: ''
     }
   },
   methods: {
-    openModal (item) {
-      this.bsModal.show()
-    },
-    closeModal () {
-      this.bsModal.hide()
-    }
+    // openModal (item) {
+    //   this.bsModal.show()
+    // },
+    // closeModal () {
+    //   this.bsModal.hide()
+    // }
     // emitDeleteProduct () {
     //   this.$emit('emit-delete', this.productData.id)
     // }
-  },
-  mounted () {
-    this.bsModal = new Modal(this.$refs.modalDelete)
   }
+  // mounted () {
+  //   this.bsModal = new Modal(this.$refs.modalDelete)
+  // }
 }
 </script>

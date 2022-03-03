@@ -6,7 +6,7 @@
     role="dialog"
     aria-labelledby="exampleModalLabel"
     aria-hidden="true"
-    ref="modalProduct"
+    ref="modal"
   >
     <div class="modal-dialog modal-xl" role="document">
       <div class="modal-content border-0">
@@ -227,10 +227,13 @@
   </div>
 </template>
 <script>
-import Modal from 'bootstrap/js/dist/modal'
+// import Modal from 'bootstrap/js/dist/modal'
+import modalMixin from '@/mixins/modalMixin'
+
 export default {
   props: ['isNew', 'productData'],
   emitters: ['emitUpdateProduct'],
+  mixins: [modalMixin],
   data () {
     return {
       bsModal: '',
@@ -279,6 +282,7 @@ export default {
           console.log(err.response.data)
         })
     },
+    // 有問題…
     uploadFile2 () {
       console.log(this.$refs.fileInput2.files[0])
       const file = this.$refs.fileInput2.files[0]
@@ -306,16 +310,16 @@ export default {
           this.status.fileUploading = false
           console.log(err.response.data)
         })
-    },
-    openModal () {
-      this.bsModal.show()
-    },
-    closeModal () {
-      this.bsModal.hide()
     }
-  },
-  mounted () {
-    this.bsModal = new Modal(this.$refs.modalProduct)
+    // openModal () {
+    //   this.bsModal.show()
+    // },
+    // closeModal () {
+    //   this.bsModal.hide()
+    // }
   }
+  // mounted () {
+  //   this.bsModal = new Modal(this.$refs.modalProduct)
+  // }
 }
 </script>
