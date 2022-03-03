@@ -107,11 +107,12 @@ export default {
         })
     },
     updateProduct (productData) {
+      // 狀態：新增產品
       let url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/product`
       let httpMethod = 'post'
+      // 狀態：修改產品
       if (!this.isNew) {
-        url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}
-        /admin/product/${productData.id}`
+        url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/product/${productData.id}`
         httpMethod = 'put'
       }
       this.$http[httpMethod](url, { data: productData })
@@ -128,8 +129,7 @@ export default {
     deleteProduct (id) {
       this.$http
         .delete(
-          `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}
-          /admin/product/${id}`
+          `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/product/${id}`
         )
         .then((res) => {
           // console.log(res.data)
