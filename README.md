@@ -1,5 +1,7 @@
 # week7
 
+https://potatokaka.github.io/HexVue_week7_Full/#/
+
 ## Project setup
 
 ```
