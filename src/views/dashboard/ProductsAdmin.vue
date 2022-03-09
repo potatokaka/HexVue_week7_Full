@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <Loading :active="loadingOverlay"></Loading>
     <h2 class="my-3">後台－產品列表</h2>
     <div class="text-end mt-4">
       <button class="btn btn-primary" type="button" @click="openModal(true)">
@@ -23,12 +24,12 @@
           <td>{{ item.title }}</td>
 
           <td class="text-right">
-            <!-- {{ $filters.currency(item.origin_price) }} -->
-            {{ item.origin_price }}
+            <!-- {{ item.origin_price }} -->
+            {{ $filters.currency(item.origin_price) }}
           </td>
           <td class="text-right">
-            <!-- {{ $filters.currency(item.price) }} -->
-            {{ item.price }}
+            <!-- {{ item.price }} -->
+            {{ $filters.currency(item.price) }}
           </td>
           <td>
             <span v-if="item.is_enabled" class="text-success">啟用</span>
@@ -83,7 +84,8 @@ export default {
       products: [],
       pagination: {},
       tempProduct: {},
-      isNew: false
+      isNew: false,
+      loadingOverlay: false
     }
   },
   components: {
@@ -93,6 +95,7 @@ export default {
   },
   methods: {
     getAdminProducts (page = 1) {
+      this.loadingOverlay = true
       this.$http
         .get(
           `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/products?page=${page}`
@@ -101,29 +104,35 @@ export default {
           // console.log(res.data)
           this.products = res.data.products
           this.pagination = res.data.pagination
+          this.loadingOverlay = false
         })
         .catch((err) => {
           console.log(err.response.data)
+          this.loadingOverlay = false
         })
     },
     updateProduct (productData) {
       // 狀態：新增產品
       let url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/product`
       let httpMethod = 'post'
+      let status = '新增產品'
       // 狀態：修改產品
       if (!this.isNew) {
         url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/product/${productData.id}`
         httpMethod = 'put'
+        status = '更新產品'
       }
       this.$http[httpMethod](url, { data: productData })
         .then((res) => {
           // console.log(res.data)
-          alert(res.data.message)
+          // alert(res.data.message)
+          this.$httpMessageState(res, status)
           this.getAdminProducts()
           this.$refs.modalProduct.closeModal()
         })
         .catch((err) => {
           console.log(err.response.data)
+          this.$httpMessageState(err.response, status)
         })
     },
     deleteProduct (id) {

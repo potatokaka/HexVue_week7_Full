@@ -17,6 +17,8 @@ import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json'
 import Loading from 'vue3-loading-overlay'
 import 'vue3-loading-overlay/dist/vue3-loading-overlay.css'
 
+import { currency, date } from '@/methods/filters'
+import $httpMessageState from '@/methods/pushMessageState'
 import App from './App.vue'
 import router from './router'
 
@@ -30,6 +32,16 @@ configure({
 setLocale('zh_TW') // 設定預設語系
 
 const app = createApp(App)
+
+// 將 currency, date 加入全域下，這樣在其他地方就能直接使用
+app.config.globalProperties.$filters = {
+  currency,
+  date
+}
+// 改寫成 provide 的寫法：app.provide('$filters', { currency, date })
+// 將 $httpMessageState 加入全域下，這樣在其他地方就能直接使用
+app.config.globalProperties.$httpMessageState = $httpMessageState
+
 app.use(router)
 app.use(VueAxios, axios)
 

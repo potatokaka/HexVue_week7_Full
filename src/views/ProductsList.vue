@@ -37,7 +37,7 @@
   </div>
 </template>
 <script>
-import emitter from '@/libs/emitter'
+import emitter from '@/methods/emitter'
 export default {
   data () {
     return {
@@ -76,12 +76,14 @@ export default {
           obj
         )
         .then((res) => {
-          alert(res.data.message)
+          // alert(res.data.message)
           this.isLoadingItem = ''
-          emitter.emit('get-cart')
+          emitter.emit('get-cart') // 觸發 FrontNavbar 的監聽
+          this.$httpMessageState(res, '加入購物車')
         })
         .catch((err) => {
-          console.log(err.response.data)
+          // console.log(err.response.data)
+          this.$httpMessageState(err.response, '加入購物車')
         })
     }
   },

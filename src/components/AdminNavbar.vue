@@ -21,8 +21,13 @@
             >
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/admin/order"
+            <router-link class="nav-link" to="/admin/orders"
               >訂單管理</router-link
+            >
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" to="/admin/coupons"
+              >優惠券</router-link
             >
           </li>
         </ul>
@@ -41,13 +46,17 @@
   </nav>
 </template>
 <script>
+import checkLogin from '@/mixins/checkLogin'
+import logOut from '@/mixins/logOut'
 export default {
+  mixins: [checkLogin, logOut],
   methods: {
-    logOut () {
-      document.cookie = 'hexToken=""; expires=""'
-      alert('已清除 Token')
-      this.$router.push('/login')
-    }
+    // 改成引入 mixin 的方法
+    // logOut () {
+    //   document.cookie = 'hexToken=""; expires=""'
+    //   alert('已清除 Token')
+    //   this.$router.push('/login')
+    // }
   }
 }
 </script>

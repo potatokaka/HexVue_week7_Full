@@ -5,6 +5,7 @@ const routes = [
   // 前台
   {
     path: '/',
+    name: 'FrontView',
     component: () => import('../views/FrontView.vue'),
     children: [
       {
@@ -28,6 +29,7 @@ const routes = [
   // 帳號登入
   {
     path: '/login',
+    name: 'Login',
     component: () => import('../views/LoginView.vue')
   },
   // 後台
@@ -40,11 +42,27 @@ const routes = [
         component: () => import('../views/dashboard/ProductsAdmin.vue')
       },
       {
-        path: 'order',
+        path: 'orders',
         component: () => import('../views/dashboard/OrderView.vue')
+      },
+      {
+        path: 'coupons',
+        component: () => import('../views/dashboard/CouponsAdmin.vue')
       }
     ]
+  },
+  // 404
+  {
+    path: '/:pathMatch(.*)*',
+    component: () => import('../views/NotFound.vue')
   }
+  // Redirect：登入時，無法從登入頁跳到後台首頁？
+  // {
+  //   path: '/admin/:pathMatch(.*)*',
+  //   redirect: {
+  //     name: 'Login'
+  //   }
+  // }
 ]
 
 const router = createRouter({

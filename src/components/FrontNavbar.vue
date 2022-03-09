@@ -26,7 +26,22 @@
           </li>
         </ul>
         <div>
-          <router-link to="/login" class="btn btn-outline-primary me-3">
+          <template v-if="isLogin">
+            <router-link
+              to="/admin/products"
+              class="btn btn-outline-primary me-3"
+            >
+              到後台
+            </router-link>
+            <button
+              type="button"
+              class="btn btn-outline-primary me-3"
+              @click="logOut"
+            >
+              登出
+            </button>
+          </template>
+          <router-link to="/login" class="btn btn-outline-primary me-3" v-else>
             登入
           </router-link>
           <router-link to="/cart" class="btn btn-primary">
@@ -41,14 +56,19 @@
   </nav>
 </template>
 <script>
-import emitter from '@/libs/emitter'
+import emitter from '@/methods/emitter'
+import checkLogin from '@/mixins/checkLogin'
+import logOut from '@/mixins/logOut'
+
 export default {
+  mixins: [checkLogin, logOut],
   data () {
     return {
       cart: {
         carts: []
       },
       isLoadingItem: ''
+      // isLogin: false
     }
   },
   methods: {
@@ -70,6 +90,12 @@ export default {
     emitter.on('get-cart', () => {
       this.getCart()
     })
+    // emitter 監聽是否已登入
+    // emitter.on('is-login', () => {
+    //   console.log('emitter on')
+    //   this.isLogin = true
+    //   console.log('emitter on true')
+    // })
   }
 }
 </script>

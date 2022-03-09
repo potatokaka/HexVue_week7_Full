@@ -52,6 +52,7 @@
   </div>
 </template>
 <script>
+import emitter from '@/methods/emitter.js'
 export default {
   data () {
     return {
@@ -69,13 +70,17 @@ export default {
           // console.log(res.data)
           const { token, expired } = res.data
           document.cookie = `hexToken=${token}; expires=${new Date(expired)}`
+          // emitter login 狀態
+          emitter.emit('is-login')
+          console.log('emitter, is-login')
+
           this.$router.push('/admin')
         })
         .catch((err) => {
           alert(err.response.data.message)
         })
     },
-    // Vee Validate 手機規則
+    // Vee Validate 密碼規則
     isPassword (value) {
       const password = /^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z0-9]{8,}$/
       // const password = /^(?=.*[^a-zA-Z0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{6,}$/

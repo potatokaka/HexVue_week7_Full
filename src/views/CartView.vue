@@ -165,7 +165,7 @@
   </div>
 </template>
 <script>
-import emitter from '@/libs/emitter'
+import emitter from '@/methods/emitter'
 export default {
   name: 'Cart',
   data () {

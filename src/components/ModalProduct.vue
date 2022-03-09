@@ -232,7 +232,7 @@ import modalMixin from '@/mixins/modalMixin'
 
 export default {
   props: ['isNew', 'productData'],
-  emitters: ['emitUpdateProduct'],
+  emits: ['emitUpdateProduct'],
   mixins: [modalMixin],
   data () {
     return {
